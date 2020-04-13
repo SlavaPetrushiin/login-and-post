@@ -1,0 +1,16 @@
+.posts{
+    padding-top: 50px;
+}
+
+.post{
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #07F0FF;
+    border-radius: 10px;
+}
+
+.title{
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}

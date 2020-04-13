@@ -99,7 +99,6 @@ class Login extends Component<IMapStateToProps & IMapDispatchToProps, IState> {
         })
     };
 
-
     render() {
         if(this.props.session) return <Redirect to={'/profile'} />
 

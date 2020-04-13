@@ -22,8 +22,7 @@ export function logout() {
 }
 
 export const  autoLogout = (time: number) => (dispatch : Dispatch): void => {
-    debugger
     setTimeout(() => {
         dispatch(logout())
     }, time * 1000);
-}
+};
