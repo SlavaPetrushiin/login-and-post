@@ -1,26 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Home from "./psges/Home/Home";
+import Login from "./psges/Login/Login";
+import Posts from "./psges/Posts/Posts";
+import Profile from "./psges/Profile/Profile";
+import Navbar from "./component/Navbar/Navbar";
+import './App.css'
+import { Route } from 'react-router-dom';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div>
+            <div className={'container'}>
+                <Navbar />
+            </div>
+            <div className={'container'}>
+                <Route path={'/'} exact render={() => <Home/>} />
+                <Route path={'/login'} render={() => <Login />} />
+                <Route path={'/posts'} render={() => <Posts/>} />
+                <Route path={'/profile'} render={() => <Profile/>} />
+            </div>
+        </div>
+    );
 }
 
 export default App;

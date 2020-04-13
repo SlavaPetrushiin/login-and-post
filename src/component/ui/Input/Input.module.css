@@ -1,0 +1,23 @@
+.authBlockInput{
+    margin-bottom: 20px;
+}
+.authLabel{
+    font-weight: 600;
+}
+
+.authLabel > span{
+    display: block;
+    margin-bottom: 10px;
+}
+
+.authLabel > input{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border:1px solid grey;
+}
+
+.authLabel > input:focus{
+    outline: none;
+}

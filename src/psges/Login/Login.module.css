@@ -1,0 +1,19 @@
+.auth{
+   padding-top: 50px;
+}
+
+.authForm{
+   max-width: 500px;
+   width: 100%;
+   padding: 20px;
+   margin: 0 auto;
+   border: 1px solid grey;
+   border-radius: 20px;
+}
+
+.error{
+   color: red;
+   font-weight: 600;
+   display: inline-block;
+   margin-bottom: 20px;
+}
