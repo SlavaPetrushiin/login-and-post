@@ -4,10 +4,8 @@ import cls from "./Login.module.css";
 import Button from "../../component/ui/Button/Button";
 import {connect} from "react-redux";
 import {RootState} from "../../store/store";
-import { IInitialStateAuth } from '../../store/auth/authReducer';
-import {authError, logout, updateSession} from "../../store/auth/actions";
+import {authError, autoLogout,  updateSession} from "../../store/auth/auth";
 import {Dispatch} from "redux";
-import {SystemActionTypes} from "../../store/auth/types";
 import { Redirect } from 'react-router-dom';
 
 export type IInput = {
@@ -38,7 +36,7 @@ interface IMapStateToProps {
 interface IMapDispatchToProps {
     updateSession: (session: boolean) => void
     authError: () => void
-    logout: () => void
+    autoLogout: (time: number) => void
 }
 
 class Login extends Component<IMapStateToProps & IMapDispatchToProps, IState> {
@@ -80,14 +78,10 @@ class Login extends Component<IMapStateToProps & IMapDispatchToProps, IState> {
             this.state.formControls.name.value === this.props.username
             && Number(this.state.formControls.password.value) === this.props.password
         ){
-            const timeSession = 60;
+            const timeSession = 3600;
             const expirationData = new Date(new Date().getTime() + timeSession * 1000).toString();
-            debugger
             localStorage.setItem('session', expirationData);
-            setTimeout(() => {
-                this.props.logout()
-            }, timeSession * 1000)
-
+            this.props.autoLogout(timeSession);
             this.props.updateSession(!this.props.session);
         } else {
             this.props.authError();
@@ -131,18 +125,4 @@ const mapStateToProps = (state: RootState)  => {
   }
 };
 
-const mapDispatchToProps = (dispatch: Dispatch)  => {
-    return {
-        updateSession(session: boolean){
-            dispatch(updateSession(session))
-        },
-        authError(){
-            dispatch(authError())
-        },
-        logout(){
-            dispatch(logout())
-        }
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, {updateSession, authError, autoLogout})(Login);

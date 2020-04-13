@@ -1,4 +1,5 @@
 import {UPDATE_SESSION, SystemActionTypes, AUTH_ERROR, AUTH_LOGOUT} from './types'
+import {Dispatch} from "redux";
 
 export function updateSession(newSession: boolean): SystemActionTypes {
     return {
@@ -18,4 +19,11 @@ export function logout() {
     return {
         type: AUTH_LOGOUT
     }
+}
+
+export const  autoLogout = (time: number) => (dispatch : Dispatch): void => {
+    debugger
+    setTimeout(() => {
+        dispatch(logout())
+    }, time * 1000);
 }
