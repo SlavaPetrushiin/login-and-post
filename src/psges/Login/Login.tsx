@@ -5,7 +5,6 @@ import Button from "../../component/ui/Button/Button";
 import {connect} from "react-redux";
 import {RootState} from "../../store/store";
 import {authError, autoLogout,  updateSession} from "../../store/auth/auth";
-import {Dispatch} from "redux";
 import { Redirect } from 'react-router-dom';
 
 export type IInput = {

@@ -16,7 +16,7 @@ interface IMapDispatchToProps {
 }
 
 
-class Posts extends Component<IMapStateToProps & IMapDispatchToProps, any> {
+class Posts extends Component<IMapStateToProps & IMapDispatchToProps> {
     componentDidMount(): void {
         this.props.fetchPosts();
     }
