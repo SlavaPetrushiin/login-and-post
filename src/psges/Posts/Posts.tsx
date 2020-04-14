@@ -19,11 +19,26 @@ interface IMapDispatchToProps {
 class Posts extends Component<IMapStateToProps & IMapDispatchToProps> {
     componentDidMount(): void {
         this.props.fetchPosts();
+        window.addEventListener('scroll', this.onScroll);
     }
+
+    onScroll = () => {
+        const windowHeight = window.innerHeight;
+        let scrollHeight = Math.max(
+            document.body.scrollHeight, document.documentElement.scrollHeight,
+            document.body.offsetHeight, document.documentElement.offsetHeight,
+            document.body.clientHeight, document.documentElement.clientHeight
+        );
+
+        if(scrollHeight - windowHeight < window.pageYOffset + 20) {
+            this.props.fetchPosts();
+        }
+    };
 
     renderPosts = () => {
         return this.props.posts.map((post: IPost) => {
-            return <Post {...post} key={post.id + Math.random() * 1000}/>}
+                return <Post {...post} key={post.id + new Date().toString()}/>
+            }
         )
     };
 
@@ -31,7 +46,7 @@ class Posts extends Component<IMapStateToProps & IMapDispatchToProps> {
         return (
             <div className={cls.posts}>
                 {this.props.posts === 0
-                    ? <Loader />
+                    ? <Loader/>
                     : this.renderPosts()
                 }
             </div>
