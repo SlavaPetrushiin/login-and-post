@@ -1,6 +1,7 @@
 .menuNav{
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     background-color: #07F0FF;
     padding: 15px 0;
 }

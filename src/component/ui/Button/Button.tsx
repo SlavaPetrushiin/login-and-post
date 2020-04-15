@@ -7,6 +7,11 @@ interface IProps {
 }
 
 const Button = (props: IProps) => {
+    const classes = [
+        cls.button
+    ];
+
+
     return (
         <div>
             <button

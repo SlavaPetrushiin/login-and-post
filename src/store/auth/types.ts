@@ -1,18 +1,21 @@
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const UPDATE_SESSION = 'UPDATE_SESSION';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
-interface UpdateSessionAction {
-    type: typeof UPDATE_SESSION
-    session: boolean
+
+export interface AuthSuccessAction{
+    type: typeof AUTH_SUCCESS
+    token: string
 }
 
-interface AuthErrorAction {
-    type: typeof AUTH_ERROR
+export interface AuthErrorAction {
+    type: typeof AUTH_ERROR,
+    errorMassage: string
 }
 
-interface AuthLogoutAction {
+export interface AuthLogoutAction {
     type: typeof AUTH_LOGOUT
 }
 
-export type SystemActionTypes = UpdateSessionAction | AuthErrorAction | AuthLogoutAction
+export type SystemActionTypes = AuthErrorAction | AuthLogoutAction | AuthSuccessAction

@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 interface IMapStateToProps {
-    session: boolean
+    token: string | null
 }
 
 class Profile extends Component<IMapStateToProps> {
     render() {
-        if(!this.props.session) return <Redirect to={'/login'}/>
+        if(!this.props.token) return <Redirect to={'/login'}/>
 
         return (
             <div className={cls.profile}>
@@ -30,7 +30,7 @@ class Profile extends Component<IMapStateToProps> {
 
 const mapStateToProps = (state: RootState) => {
     return {
-        session: state.auth.session
+        token: state.auth.token
     }
 };
 

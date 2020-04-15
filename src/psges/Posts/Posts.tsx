@@ -8,18 +8,21 @@ import Post from "./Post";
 import Loader from "../../component/Loader/Loader";
 
 interface IMapStateToProps {
-    posts: any
+    posts: IPost[]
 }
 
 interface IMapDispatchToProps {
     fetchPosts: () => void
 }
 
-
 class Posts extends Component<IMapStateToProps & IMapDispatchToProps> {
     componentDidMount(): void {
         this.props.fetchPosts();
         window.addEventListener('scroll', this.onScroll);
+    }
+
+    componentWillUnmount(): void {
+        window.removeEventListener('scroll', this.onScroll);
     }
 
     onScroll = () => {
@@ -43,9 +46,10 @@ class Posts extends Component<IMapStateToProps & IMapDispatchToProps> {
     };
 
     render() {
+
         return (
             <div className={cls.posts}>
-                {this.props.posts === 0
+                {!this.props.posts.length
                     ? <Loader/>
                     : this.renderPosts()
                 }

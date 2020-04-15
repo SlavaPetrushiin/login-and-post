@@ -1,8 +1,7 @@
 import React from "react";
-import './Loader.module.css'
+import './Loader.css'
 
 const Loader = () => {
-    debugger
     return(
         <div className="lds-dual-ring" />
     )

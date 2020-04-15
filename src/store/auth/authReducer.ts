@@ -1,38 +1,29 @@
-import {AUTH_ERROR, AUTH_LOGOUT, SystemActionTypes, UPDATE_SESSION} from "./types";
+import {AUTH_ERROR, AUTH_LOGOUT, AUTH_SUCCESS, SystemActionTypes, UPDATE_SESSION} from "./types";
 
-export interface IInitialStateAuth {
-    username: string
-    password: number
-    session: boolean
-    error: boolean
-    errorMessage: string
-}
 
-const initialState: IInitialStateAuth = {
-    username: 'Admin',
-    password: 123123,
-    session: false,
-    error: false,
-    errorMessage: 'Имя пользователя или пароль введены не верно'
+const initialState = {
+    token: null as string | null,
+    authError: null as string | null
 };
 
-const authReducer = (state = initialState, action: any) => {
+type StateType = typeof initialState
+
+const authReducer = (state = initialState, action: SystemActionTypes): StateType => {
     switch (action.type) {
-        case UPDATE_SESSION:
+        case AUTH_SUCCESS:
             return {
                 ...state,
-                session: action.session,
-                error: false
+                token: action.token
             };
         case AUTH_LOGOUT:
             return {
                 ...state,
-                session: false
+                token: null
             };
         case AUTH_ERROR:
             return {
                 ...state,
-                error: true
+                authError: action.errorMassage
             };
         default:
             return state

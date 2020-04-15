@@ -4,7 +4,7 @@ import cls from "./Login.module.css";
 import Button from "../../component/ui/Button/Button";
 import {connect} from "react-redux";
 import {RootState} from "../../store/store";
-import {authError, autoLogout,  updateSession} from "../../store/auth/auth";
+import {autoLogout, login} from "../../store/auth/auth";
 import { Redirect } from 'react-router-dom';
 
 export type IInput = {
@@ -25,17 +25,13 @@ type IState = {
 }
 
 interface IMapStateToProps {
-    username: string
-    password: number
-    session: false
-    error: boolean
-    errorMessage: string
+    token: string | null
+    error: string | null
 }
 
 interface IMapDispatchToProps {
-    updateSession: (session: boolean) => void
-    authError: () => void
     autoLogout: (time: number) => void
+    login: (username: string, password: string) => void
 }
 
 class Login extends Component<IMapStateToProps & IMapDispatchToProps, IState> {
@@ -73,18 +69,9 @@ class Login extends Component<IMapStateToProps & IMapDispatchToProps, IState> {
     };
 
     handleClickAuth = () => {
-        if(
-            this.state.formControls.name.value === this.props.username
-            && Number(this.state.formControls.password.value) === this.props.password
-        ){
-            const timeSession = 3600;
-            const expirationData = new Date(new Date().getTime() + timeSession * 1000).toString();
-            localStorage.setItem('session', expirationData);
-            this.props.autoLogout(timeSession);
-            this.props.updateSession(!this.props.session);
-        } else {
-            this.props.authError();
-        }
+        const username = this.state.formControls.name.value;
+        const password = this.state.formControls.password.value;
+        this.props.login(username, password);
     };
 
     renderInputs = () => {
@@ -99,13 +86,13 @@ class Login extends Component<IMapStateToProps & IMapDispatchToProps, IState> {
     };
 
     render() {
-        if(this.props.session) return <Redirect to={'/profile'} />
+        if(this.props.token) return <Redirect to={'/profile'} />
 
         return (
             <div className={cls.auth}>
                 <form onSubmit={this.handleSubmit} className={cls.authForm}>
                     {this.renderInputs()}
-                    {this.props.error && <span className={cls.error}>{this.props.errorMessage}</span>}
+                    {this.props.error && <span className={cls.error}>{this.props.error}</span>}
                     <Button text={'Войти'} onClick={this.handleClickAuth}/>
                 </form>
             </div>
@@ -115,12 +102,9 @@ class Login extends Component<IMapStateToProps & IMapDispatchToProps, IState> {
 
 const mapStateToProps = (state: RootState)  => {
   return {
-      password: state.auth.password,
-      username: state.auth.username,
-      session: state.auth.session,
-      error: state.auth.error,
-      errorMessage: state.auth.errorMessage
+      token: state.auth.token,
+      error: state.auth.authError
   }
 };
 
-export default connect(mapStateToProps, {updateSession, authError, autoLogout})(Login);
+export default connect<IMapStateToProps, IMapDispatchToProps, {}, RootState>(mapStateToProps, {autoLogout, login})(Login);
